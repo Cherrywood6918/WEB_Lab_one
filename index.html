@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>177013</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="validator.js"></script>
+    <script type="text/javascript" src="validate.js"></script>
 
 </head>
+
 <body onload="load()">
 <!— Комментарий -->
 <style type="text/css">
@@ -210,13 +211,12 @@
                         <form action="script.php" method="POST">
                             <label for="field_X">X: </label>
                             <input type="text" id="field_X" name="coordinateX" oninput="validateX()"
-                                   placeholder="[-5;5]" maxlength="18"><br>
+                                   placeholder="[-5;5]"><br>
                             <label for="field_Y">Y: </label>
                             <input type="text" id="field_Y" name="coordinateY" oninput="validateY()"
-                                   placeholder="[-3;3]" maxlength="18"><br>
+                                   placeholder="[-3;3]"><br>
                             <label for="field_R">R: </label>
-                            <input type="text" id="field_R" name="radius " oninput="validateR()" placeholder="[2;5]"
-                                   maxlength="18"><br>
+                            <input type="text" id="field_R" name="radius " oninput="validateR()" placeholder="[2;5]"><br>
                         </form>
                         <span id="error">Некорректные значения!</span><br>
                     </td>
@@ -250,5 +250,94 @@
         <td></td>
     </tr>
 </table>
+
+<script>
+    'use strict'
+
+    function checkButton() {
+        return validateX() & validateY() & validateR();
+    }
+
+    function validateX() {
+        let x = $('#field_X').val().match(/^[-]?(([0-4]{1}[\,|\.]{1}[0-9]{1,})|[0-5])$/);
+        if (x == null || x[0] === "-0") {
+            $('#field_X').addClass('input-invalid');
+            return false;
+        } else {
+            $('#field_X').removeClass();
+            return true;
+        }
+
+    }
+
+    function validateY() {
+        let y = $('#field_Y').val().match(/^[-]?(([0-2]{1}[\,|\.]{1}[0-9]{1,})|[0-3])$/);
+        if (y == null || y[0] === "-0") {
+            $('#field_Y').addClass('input-invalid');
+            return false;
+        } else {
+            $('#field_Y').removeClass();
+            return true;
+        }
+
+    }
+
+    function validateR() {
+        let r = $('#field_R').val().match(/^(([2-4]{1}[\,|\.]{1}[0-9]{1,})|[2-5])$/);
+        if (r == null) {
+            $('#field_R').addClass('input-invalid');
+            return false;
+        } else {
+            $('#field_R').removeClass();
+            return true;
+        }
+    }
+
+    $('#button_submit button').on("click", function (e) {
+        e.preventDefault();
+        if (checkButton()) {
+            $('#error').css("display", "none");
+            let x = $('#field_X').val().replace(',', '.');
+            let y = $('#field_Y').val().replace(',', '.');
+            let r = $('#field_R').val().replace(',', '.');
+            $.ajax({
+                    url: "script.php",
+                    method: "POST",
+                    data: {
+                        coordinateX: x,
+                        coordinateY: y,
+                        radius: r,
+                        flag: "true"
+                    },
+                    statusCode: {
+                        400: function () {
+                            $('#error').css("display", "block");
+                        },
+                        200: function (data) {
+                            console.log(data);
+                            $('.table-data').append(data);
+                        }
+                    }
+                }
+            );
+        }
+    });
+
+    function load() {
+        $.ajax({
+                url: "script.php",
+                method: "POST",
+                data: {
+                    flag: "false"
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('.table-data').append(data);
+                }
+            }
+        );
+    }
+
+</script>
 </body>
 </html>

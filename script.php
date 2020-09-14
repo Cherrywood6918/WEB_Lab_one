@@ -29,17 +29,12 @@ function checkArea($x, $y, $r)
 
 function validate($x, $y, $r)
 {
-    $fieldX = !validateStr($x) && $x >= -5 && $x <= 5;
-    $fieldY = !validateStr($y) && $y >= -3 && $y <= 3;
-    $fieldR = !validateStr($r) && $r >= 2 && $r <= 5;
-
+    $fieldX = preg_match("/^[-]?(([0-4]{1}[\,|\.]{1}[0-9]{1,})|[0-5])$/",$x) && $x!=="-0";
+    $fieldY = preg_match("/^[-]?(([0-2]{1}[\,|\.]{1}[0-9]{1,})|[0-3])$/",$y) && $y!=="-0";
+    $fieldR = preg_match("/^(([2-4]{1}[\,|\.]{1}[0-9]{1,})|[2-5])$/",$y);
     return $fieldX && $fieldY && $fieldR;
 }
 
-function validateStr($str)
-{
-    return strlen(trim($str)) === 0 || $str === "-0" || !is_numeric($str);
-}
 
 function dataGeneration() {
     $start = microtime(true);
