@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>177013</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="validator.js"></script>
+
+</head>
+<body onload="load()">
+<!— Комментарий -->
+<style type="text/css">
+
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+
+    body {
+        background: url("girl.png") right bottom no-repeat fixed, white url("rain2.png") fixed;
+        font-family: Courier New, Cambria;
+    }
+
+    .main {
+        border-collapse: collapse;
+        width: 100%;
+        height: 100%;
+    }
+
+    .main td, th {
+        width: 55%;
+    }
+
+
+    .header {
+        background: #1b1b1b;
+        color: white;
+        height: 40px;
+        padding-left: 10px;
+        padding-top: 4px;
+        font-size: 20px;
+        text-shadow: white 0 0 10px;
+    }
+
+
+    .quote {
+        text-align: right;
+        background: #1b1b1b;
+        color: white;
+        height: 40px;
+        padding-right: 10px;
+        padding-bottom: 2px;
+        font-style: italic;
+        font-size: 14px;
+        quotes: none;
+    }
+
+    form > input[type=text] {
+        width: 60%;
+        margin-top: 3%;
+        margin-bottom: 1%;
+        color: white;
+        background: #434343;
+        text-align: center;
+    }
+
+    button,
+    button:active,
+    button:focus {
+        outline: none;
+    }
+
+    #button_submit button {
+        margin-bottom: 25px;
+        background: #1b1b1b;
+        border: 1px solid #434343;
+        border-radius: 10px;
+        color: white;
+        font-family: monospace;
+        height: 40px;
+        width: 100px;
+
+    }
+
+    #button_submit button:hover {
+        box-shadow: white 0 0 4px;
+
+    }
+
+    #button_submit button:active {
+        background-color: white;
+        color: #1b1b1b;
+
+    }
+
+    .input-field .input-invalid {
+        border-color: #720004;
+        background: #c63636;
+        color: white;
+    }
+
+    .table-data {
+        border-collapse: collapse;
+        border: 3px solid #1b1b1b;
+        width: 90%;
+        word-break: break-all;
+        text-align: center;
+        table-layout: fixed;
+        margin: 10px;
+
+    }
+
+    .table-data td, th {
+        border: 2px solid #1b1b1b;
+    }
+
+    .table-data tr:nth-child(odd) {
+        background-color: white;
+    }
+
+    .table-data th {
+        background: #1b1b1b;
+        color: white;
+        height: 30px;
+    }
+
+    .table-data td {
+        font-weight: bold;
+        color: #1b1b1b;
+    }
+
+    .table-data tr {
+        background: lightgray;
+    }
+
+    #error {
+        color: red;
+        font-size: 20px;
+        display: none;
+    }
+
+    .input-field {
+        border-collapse: collapse;
+        border-radius: 10px;
+        background: #1b1b1b;
+        outline: 1px dashed white;
+        outline-offset: -10px;
+        text-align: center;
+        width: 450px;
+        margin: 20px;
+    }
+
+    .input-field #coordinates {
+        color: white;
+        height: 150px;
+
+    }
+
+    .input-field #button_submit {
+        height: 60px;
+    }
+
+    .input-field #image img {
+        margin-top: 3%;
+    }
+
+    .col-1, .col-2, .col-3 {
+        width: 60px;;
+    }
+
+    .true {
+        color: darkgreen;
+    }
+
+    .false {
+        color: #720004;
+    }
+
+
+</style>
+
+<table class="main">
+    <tr>
+        <td class="header" colspan="3">ПОПОВА ПОЛИНА P3232
+            <br>ВАРИАНТ 2814
+        </td>
+    </tr>
+    <tr>
+        <td class="quote" colspan="3">
+            "Волк слабее человека, <br>
+            но на пары в 8:20 не встает."
+        </td>
+    </tr>
+
+    <tr>
+        <td class="form" align="center">
+            <table class="input-field">
+                <tr>
+                    <td id="image" align="center"><img src="are.png"></td>
+                </tr>
+                <tr>
+                    <td id="coordinates">
+                        <form action="script.php" method="POST">
+                            <label for="field_X">X: </label>
+                            <input type="text" id="field_X" name="coordinateX" oninput="validateX()"
+                                   placeholder="[-5;5]" maxlength="18"><br>
+                            <label for="field_Y">Y: </label>
+                            <input type="text" id="field_Y" name="coordinateY" oninput="validateY()"
+                                   placeholder="[-3;3]" maxlength="18"><br>
+                            <label for="field_R">R: </label>
+                            <input type="text" id="field_R" name="radius " oninput="validateR()" placeholder="[2;5]"
+                                   maxlength="18"><br>
+                        </form>
+                        <span id="error">Некорректные значения!</span><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="button_submit">
+                        <button type="submit">ОТПРАВИТЬ</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="table" align="center">
+            <table class="table-data">
+                <col class="col-1">
+                <col class="col-2">
+                <col class="col-3">
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>R</th>
+                    <th>Текущее время</th>
+                    <th>Время выполнения</th>
+                    <th>Результат</th>
+                </tr>
+
+            </table>
+        </td>
+        <td></td>
+    </tr>
+</table>
+</body>
+</html>
