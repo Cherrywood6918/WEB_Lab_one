@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <title>177013</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="validate.js"></script>
-
 </head>
 
 <body onload="load()">
-<!— Комментарий -->
+
 <style type="text/css">
-
-
     body {
         margin: 0;
         padding: 0;
     }
-
-
+    
     html, body {
         height: 100%;
         width: 100%;
@@ -110,7 +105,7 @@
     .table-data {
         border-collapse: collapse;
         border: 3px solid #1b1b1b;
-        width: 90%;
+        width: 100%;
         word-break: break-all;
         text-align: center;
         table-layout: fixed;
@@ -173,15 +168,7 @@
     }
 
     .col-1, .col-2, .col-3 {
-        width: 60px;;
-    }
-
-    .true {
-        color: darkgreen;
-    }
-
-    .false {
-        color: #720004;
+        width: 80px;;
     }
 
 
@@ -312,6 +299,7 @@
                     statusCode: {
                         400: function () {
                             $('#error').css("display", "block");
+                            console.log('Невалидные данные формы');
                         },
                         200: function (data) {
                             console.log(data);
